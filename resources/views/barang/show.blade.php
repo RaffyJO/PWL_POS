@@ -37,6 +37,12 @@
                 <tr>
                     <th>Harga Jual</th>
                     <td>{{ $barang->harga_jual}}</td>
+                </tr>
+                <tr>
+                    <th>Gambar</th>
+                    <td>
+                        <img src="{{ asset($barang->image) }}" alt="Gambar Barang" class="img-fluid" style="max-width: 200px; height: auto;">
+                    </td>
                 </tr>               
             </table>
         @endempty

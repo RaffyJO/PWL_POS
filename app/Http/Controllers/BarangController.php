@@ -74,7 +74,16 @@ class BarangController extends Controller
             'harga_beli' => 'required|integer',
             'harga_jual' => 'required|integer',
             'kategori_id' => 'required|integer',
+            'gambar' => 'required|image|max:2000',
         ]);
+
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $request->barang_kode . '_' . time() . '.' . $extension;
+            $file->move(public_path('storage/barang'), $filename);
+            $filepath = $filename;
+        }
 
         BarangModel::create([
             'barang_kode' => $request->barang_kode,
@@ -82,6 +91,7 @@ class BarangController extends Controller
             'harga_beli' => $request->harga_beli,
             'harga_jual' => $request->harga_jual,
             'kategori_id' => $request->kategori_id,
+            'image' => $filepath,
         ]);
 
         return redirect('/barang')->with('success', 'Data barang berhasil disimpan');
@@ -132,7 +142,16 @@ class BarangController extends Controller
             'harga_beli' => 'required|integer',
             'harga_jual' => 'required|integer',
             'kategori_id' => 'required|integer',
+            'gambar' => 'required|image|max:2000',
         ]);
+
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $request->barang_kode . '_' . time() . '.' . $extension;
+            $file->move(public_path('storage/barang'), $filename);
+            $filepath = $filename;
+        }
 
         BarangModel::find($id)->update([
             'barang_kode' => $request->barang_kode,
@@ -140,6 +159,7 @@ class BarangController extends Controller
             'harga_beli' => $request->harga_beli,
             'harga_jual' => $request->harga_jual,
             'kategori_id' => $request->kategori_id,
+            'image' => $filepath,
         ]);
 
         return redirect('/barang')->with('success', 'Data barang berhasil diubah');
